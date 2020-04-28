@@ -1,47 +1,39 @@
 #pragma once
 
 namespace solver {
-	struct ComplexVariable {
-		char roots = 0;
-		std::complex<double> comp1;
-		std::complex<double> comp2;
-	};
+    class ComplexVariable {
+	private:
+        double re;
+        double im;
+    public:
+    	friend ComplexVariable& operator + (ComplexVariable& comp1, ComplexVariable& comp2);
+	    friend ComplexVariable& operator + (ComplexVariable& comp, double n);
+        friend ComplexVariable& operator + (double n, ComplexVariable& comp);
+        friend ComplexVariable& operator + (ComplexVariable& comp1, std::complex<double> comp2);
+        friend ComplexVariable& operator + (std::complex<double> comp2, ComplexVariable& comp1);
 
-	struct ComplexExpression {
-		std::complex<double> a = 0;
-		std::complex<double> b;
-		std::complex<double> c;
-		struct ComplexVariable* x;
+        friend ComplexVariable& operator - (ComplexVariable& comp1, ComplexVariable& comp2);
+	    friend ComplexVariable& operator - (ComplexVariable& comp, double n);
+        friend ComplexVariable& operator - (double n, ComplexVariable& comp);
+        friend ComplexVariable& operator - (ComplexVariable& comp1, std::complex<double> comp2);
+        friend ComplexVariable& operator - (std::complex<double> comp2, ComplexVariable& comp1);
 
-		ComplexExpression() {
-			b = 0;
-			c = 0;
-		}
+		friend ComplexVariable& operator * (ComplexVariable& comp1, ComplexVariable& comp2);
+	    friend ComplexVariable& operator * (ComplexVariable& comp, double n);
+        friend ComplexVariable& operator * (double n, ComplexVariable& comp);
+        friend ComplexVariable& operator * (ComplexVariable& comp1, std::complex<double> comp2);
+        friend ComplexVariable& operator * (std::complex<double> comp2, ComplexVariable& comp1);
+        
+        friend ComplexVariable& operator / (ComplexVariable& comp1, ComplexVariable& comp2);
+        friend ComplexVariable& operator / (ComplexVariable& comp, double n);
+        friend ComplexVariable& operator / (double n, ComplexVariable& comp);
+        friend ComplexVariable& operator / (ComplexVariable& comp1, std::complex<double> comp2);
+        friend ComplexVariable& operator / (std::complex<double> comp2, ComplexVariable& comp1);
+        
+        friend ComplexVariable& operator ^ (ComplexVariable& comp, double n);
 
-		ComplexExpression(int c) {
-        	b = 0;
-        	this->c = c;
-        	x = 0;
-    	}
-
-		ComplexExpression(std::complex<double> c) {
-        	b = 0;
-			this->c = c;
-        	x = 0;
-    	}
-
-    	ComplexExpression(ComplexVariable& comp) {
-        	b = 1;
-        	c = 0;
-        	x = &comp;
-    	}
-	};
-
-	ComplexExpression operator + (ComplexExpression l1, ComplexExpression l2);
-	ComplexExpression operator - (ComplexExpression l1, ComplexExpression l2);
-	ComplexExpression operator * (ComplexExpression l1, ComplexExpression l2);
-	ComplexExpression operator / (ComplexExpression l1, ComplexExpression l2);
-	ComplexExpression operator ^ (ComplexExpression l1, ComplexExpression l2);
-	void operator == (ComplexExpression l1, ComplexExpression l2);
-	std::ostream& operator << (std::ostream& os, const ComplexVariable& comp);
+		friend ComplexVariable& operator == (ComplexVariable& comp1, ComplexVariable& comp2);
+        friend ComplexVariable& operator == (ComplexVariable& comp, double n);
+        friend ComplexVariable& operator == (ComplexVariable& comp1, std::complex<double> comp2);
+    };
 };

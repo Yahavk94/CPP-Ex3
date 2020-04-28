@@ -1,12 +1,13 @@
+#pragma once
+
+#include <iostream>
+#include <complex>
 #include "RealVariable.hpp"
 #include "ComplexVariable.hpp"
 
-using solver::RealLine;
-using solver::RealVariable;
-using solver::ComplexExpression;
-using solver::ComplexVariable;
+using namespace std;
 
 namespace solver {
-    RealVariable solve(const std::istream& expression);
-    //ComplexVariable solve(ComplexLine line);
+    double solve(RealVariable real);
+    complex<double> solve(ComplexVariable complex);
 };

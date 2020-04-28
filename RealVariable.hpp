@@ -1,41 +1,29 @@
 #pragma once
 
 namespace solver {
-	struct RealVariable {
-		char roots = 0;
-		double r1;
-		double r2;
-	};
+    class RealVariable {
+	private:
+        double re;
+    public:
+		friend RealVariable& operator + (RealVariable& re1, RealVariable& re2);
+	    friend RealVariable& operator + (RealVariable& re, double n);
+        friend RealVariable& operator + (double n, RealVariable& re);
 
-	struct RealLine {
-		double a = 0;
-    	double b;
-		double c;
-		struct RealVariable* x;
+		friend RealVariable& operator - (RealVariable& re1, RealVariable& re2);
+		friend RealVariable& operator - (RealVariable& re, double n);
+		friend RealVariable& operator - (double n, RealVariable& re);
 
-		RealLine() {
-			b = 0;
-			c = 0;
-		}
+		friend RealVariable& operator * (RealVariable& r1, RealVariable& r2);
+		friend RealVariable& operator * (RealVariable& re, double n);
+        friend RealVariable& operator * (double n, RealVariable& re);
 
-		RealLine(int c) {
-        	b = 0;
-        	this->c = c;
-        	x = 0;
-    	}
+		friend RealVariable& operator / (RealVariable& re1, RealVariable& re2);
+		friend RealVariable& operator / (RealVariable& re, double n);
+        friend RealVariable& operator / (double n, RealVariable& re);
 
-    	RealLine(RealVariable& real) {
-        	b = 1;
-        	c = 0;
-        	x = &real;
-    	}
-	};
+        friend RealVariable& operator ^ (RealVariable& re, double n);
 
-	RealLine operator + (RealLine l1, RealLine l2);
-	RealLine operator - (RealLine l1, RealLine l2);
-	RealLine operator * (RealLine l1, RealLine l2);
-	RealLine operator / (RealLine l1, RealLine l2);
-	RealLine operator ^ (RealLine l1, RealLine l2);
-	void operator == (RealLine l1, RealLine l2);
-	std::ostream& operator << (std::ostream& os, const RealVariable& real);
+		friend RealVariable& operator == (RealVariable& re1, RealVariable& re2);
+        friend RealVariable& operator == (RealVariable& re, double n);
+    };
 };
