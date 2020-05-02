@@ -1,13 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <complex>
+#include "Utils.hpp"
 #include "RealVariable.hpp"
 #include "ComplexVariable.hpp"
 
-using namespace std;
-
 namespace solver {
-    double solve(RealVariable real);
-    complex<double> solve(ComplexVariable complex);
+    double solve(RealExpression expression);
+    std::complex<double> solve(ComplexExpression expression);
 };

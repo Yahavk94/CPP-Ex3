@@ -1,29 +1,47 @@
 #pragma once
 
 namespace solver {
-    class RealVariable {
-	private:
-        double re;
-    public:
-		friend RealVariable& operator + (RealVariable& re1, RealVariable& re2);
-	    friend RealVariable& operator + (RealVariable& re, double n);
-        friend RealVariable& operator + (double n, RealVariable& re);
+	struct RealVariable {
+		double real;
+	};
 
-		friend RealVariable& operator - (RealVariable& re1, RealVariable& re2);
-		friend RealVariable& operator - (RealVariable& re, double n);
-		friend RealVariable& operator - (double n, RealVariable& re);
+	struct RealExpression {
+		double a = 0;
+		double b;
+		double c;
+		struct RealVariable* x;
 
-		friend RealVariable& operator * (RealVariable& r1, RealVariable& r2);
-		friend RealVariable& operator * (RealVariable& re, double n);
-        friend RealVariable& operator * (double n, RealVariable& re);
+		RealExpression() {
+			b = 0;
+			c = 0;
+		}
 
-		friend RealVariable& operator / (RealVariable& re1, RealVariable& re2);
-		friend RealVariable& operator / (RealVariable& re, double n);
-        friend RealVariable& operator / (double n, RealVariable& re);
+		RealExpression(double c) {
+			b = 0;
+			this->c = c;
+			x = 0;
+		}
 
-        friend RealVariable& operator ^ (RealVariable& re, double n);
+		RealExpression(RealVariable& x) {
+			b = 1;
+			c = 0;
+			this->x = &x;
+		}
+	};
 
-		friend RealVariable& operator == (RealVariable& re1, RealVariable& re2);
-        friend RealVariable& operator == (RealVariable& re, double n);
-    };
+	RealExpression operator + (RealExpression l1, RealExpression l2);
+	RealExpression operator - (RealExpression l1, RealExpression l2);
+	RealExpression operator * (RealExpression l1, RealExpression l2);
+	RealExpression operator == (RealExpression l1, RealExpression l2);
+
+	RealExpression operator + (RealExpression l1, double l2);
+	RealExpression operator - (RealExpression l1, double l2);
+	RealExpression operator * (RealExpression l1, double l2);
+	RealExpression operator / (RealExpression l1, double l2);
+	RealExpression operator ^ (RealExpression l1, double l2);
+	RealExpression operator == (RealExpression l1, double l2);
+
+	RealExpression operator + (double l1, RealExpression l2);
+	RealExpression operator - (double l1, RealExpression l2);
+	RealExpression operator * (double l1, RealExpression l2);
 };

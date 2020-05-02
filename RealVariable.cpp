@@ -1,64 +1,106 @@
-#include "MyUtils.hpp"
+#include "Utils.hpp"
 #include "RealVariable.hpp"
 
-using solver::RealVariable;
+namespace solver {
+	RealExpression operator + (RealExpression l1, RealExpression l2) {
+		RealExpression l;
+		l.a = l1.a + l2.a;
+		l.b = l1.b + l2.b;
+		l.c = l1.c + l2.c;
 
-RealVariable& solver::operator + (RealVariable& re1, RealVariable& re2) {
-    return re1;
-}
+		if (l1.x != 0) l.x = l1.x; // l1.x = 0 or l2.x = 0 or l1.x = l2.x = 0
+		else l.x = l2.x;
+		return l;
+	}
 
-RealVariable& solver::operator + (RealVariable& re, double n) {
-    return re;
-}
+	RealExpression operator - (RealExpression l1, RealExpression l2) {
+		RealExpression l;
+		l.a = l1.a - l2.a;
+		l.b = l1.b - l2.b;
+		l.c = l1.c - l2.c;
 
-RealVariable& solver::operator + (double n, RealVariable& re) {
-    return re;
-}
+		if (l1.x != 0) l.x = l1.x; // l1.x = 0 or l2.x = 0 or l1.x = l2.x = 0
+		else l.x = l2.x;
+		return l;
+	}
 
-RealVariable& solver::operator - (RealVariable& re1, RealVariable& re2) {
-    return re1;
-}
+	RealExpression operator * (RealExpression l1, RealExpression l2) {
+		RealExpression l;
+		l.a = l1.a * l2.c + l1.c * l2.a + l1.b * l2.b;
+		l.b = l1.b * l2.c + l2.b * l1.c;
+		l.c = l1.c * l2.c;
 
-RealVariable& solver::operator - (RealVariable& re, double n) {
-    return re;
-}
+		if (l1.x != 0) l.x = l1.x; // l1.x = 0 or l2.x = 0
+		else l.x = l2.x;
+		return l;
+	}
 
-RealVariable& solver::operator - (double n, RealVariable& re) {
-    return re;
-}
+	RealExpression operator == (RealExpression l1, RealExpression l2) {
+		RealExpression l = l1 - l2;
+		if (l.a == 0) {
+			l.x->real = -l.c/l.b; // Linear form
+			return l;
+		}
 
-RealVariable& solver::operator * (RealVariable& re1, RealVariable& re2) {
-    return re1;
-}
+		double determinant = l.b * l.b - 4 * l.a * l.c; // Polynomial form
+		if (determinant < 0) throw MyException("ERROR! there is no real solution");
+		l.x->real = (-l.b + sqrt(determinant)) / (2 * l.a); // A single solution is required
+		return l;
+	}
 
-RealVariable& solver::operator * (RealVariable& re, double n) {
-    return re;
-}
+	RealExpression operator + (RealExpression l1, double l2) {
+		l1.c += l2;
+		return l1;
+	}
 
-RealVariable& solver::operator * (double n, RealVariable& re) {
-    return re;
-}
+	RealExpression operator - (RealExpression l1, double l2) {
+		l1.c -= l2;
+		return l1;
+	}
 
-RealVariable& solver::operator / (RealVariable& re1, RealVariable& re2) {
-    return re1;
-}
+	RealExpression operator * (RealExpression l1, double l2) {
+		l1.a *= l2;
+		l1.b *= l2;
+		l1.c *= l2;
+		return l1;
+	}
 
-RealVariable& solver::operator / (RealVariable& re, double n) {
-    return re;
-}
+	RealExpression operator / (RealExpression l1, double l2) {
+		if (l2 == 0) throw MyException("ERROR! can not divide by zero");
+		l1.a /= l2;
+		l1.b /= l2;
+		l1.c /= l2;
+		return l1;
+	}
 
-RealVariable& solver::operator / (double n, RealVariable& re) {
-    return re;
-}
+	RealExpression operator ^ (RealExpression l1, double l2) {
+		RealExpression l;
+		l.a = l1.b * l1.b;
+		l.b = 2 * l1.b * l1.c; // Under the assumption that l2 = 2
+		l.c = l1.c * l1.c;
 
-RealVariable& solver::operator ^ (RealVariable& re, double n) {
-    return re;
-}
+		l.x = l1.x; // l2.x = 0
+		return l;
+	}
 
-RealVariable& solver::operator == (RealVariable& re1, RealVariable& re2) {
-    return re1;
-}
+	RealExpression operator == (RealExpression l1, double l2) {
+		return l1 == RealExpression(l2);
+	}
 
-RealVariable& solver::operator == (RealVariable& re, double n) {
-    return re;
-}
+	RealExpression operator + (double l1, RealExpression l2) {
+		l2.c += l1;
+		return l2;
+	}
+
+	RealExpression operator - (double l1, RealExpression l2) {
+		l2.c -= l1;
+		return l2;
+	}
+
+	RealExpression operator * (double l1, RealExpression l2) {
+		l2.a *= l1;
+		l2.b *= l1;
+		l2.c *= l1;
+		return l2;
+	}
+}; // namespace solver

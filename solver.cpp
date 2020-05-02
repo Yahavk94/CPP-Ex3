@@ -1,12 +1,11 @@
 #include "solver.hpp"
 
-using solver::RealVariable;
-using solver::ComplexVariable;
+namespace solver {
+    double solve(RealExpression expression) {
+        return expression.x->real;
+    }
 
-complex<double> solver::solve(ComplexVariable c) {
-    return std::complex<double>(0,0);
-}
-
-double solver::solve(RealVariable r) {
-    return 1;
-}
+    std::complex<double> solve(ComplexExpression expression) {
+        return expression.x->comp;
+    }
+};
