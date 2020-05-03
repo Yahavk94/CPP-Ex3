@@ -38,6 +38,7 @@ namespace solver {
 	RealExpression operator == (RealExpression l1, RealExpression l2) {
 		RealExpression l = l1 - l2;
 		if (l.a == 0) {
+			if (l.b == 0) throw MyException("ERROR! can not divide by zero");
 			l.x->real = -l.c/l.b; // Linear form
 			return l;
 		}
@@ -74,9 +75,10 @@ namespace solver {
 	}
 
 	RealExpression operator ^ (RealExpression l1, double l2) {
+		if (l2 != 2) throw MyException("ERROR! this calculator is limited");
 		RealExpression l;
 		l.a = l1.b * l1.b;
-		l.b = 2 * l1.b * l1.c; // Under the assumption that l2 = 2
+		l.b = 2 * l1.b * l1.c;
 		l.c = l1.c * l1.c;
 
 		l.x = l1.x; // l2.x = 0

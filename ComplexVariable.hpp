@@ -30,22 +30,20 @@ namespace solver {
 	};
 
 	ComplexExpression operator + (ComplexExpression l1, ComplexExpression l2);
-	ComplexExpression operator + (ComplexExpression l1, std::complex<double> l2);
-	ComplexExpression operator + (std::complex<double> l1, ComplexExpression l2);
-
 	ComplexExpression operator - (ComplexExpression l1, ComplexExpression l2);
-	ComplexExpression operator - (ComplexExpression l1, std::complex<double> l2);
-	ComplexExpression operator - (std::complex<double> l1, ComplexExpression l2);
-
 	ComplexExpression operator * (ComplexExpression l1, ComplexExpression l2);
-	ComplexExpression operator * (ComplexExpression l1, std::complex<double> l2);
-	ComplexExpression operator * (std::complex<double> l1, ComplexExpression l2);
+	ComplexExpression operator == (ComplexExpression l1, ComplexExpression l2);
 
+	ComplexExpression operator + (ComplexExpression l1, std::complex<double> l2);
+	ComplexExpression operator - (ComplexExpression l1, std::complex<double> l2);
+	ComplexExpression operator * (ComplexExpression l1, std::complex<double> l2);
 	ComplexExpression operator / (ComplexExpression l1, std::complex<double> l2);
 	ComplexExpression operator ^ (ComplexExpression l1, double l2);
-	
-	ComplexExpression operator == (ComplexExpression l1, ComplexExpression l2);
 	ComplexExpression operator == (ComplexExpression l1, std::complex<double> l2);
+
+	ComplexExpression operator + (std::complex<double> l1, ComplexExpression l2);
+	ComplexExpression operator - (std::complex<double> l1, ComplexExpression l2);
+	ComplexExpression operator * (std::complex<double> l1, ComplexExpression l2);
 }; // namespace solver
 
 std::ostream& operator << (std::ostream& os, const std::complex<double> comp);
