@@ -16,7 +16,7 @@ TEST_CASE("simple equation") {
      CHECK(solve(2*x==0)==0);
      CHECK(solve(8*x==0)==0);
      CHECK(solve(8*x/8==1)==1);
-    //  CHECK(solve(3*x==90)==20); // Wrong
+     CHECK(solve(3*x==90)==30);
      CHECK(solve(4*x+10==90)==20);
      CHECK(solve(4*x-10==90)==25);
      CHECK(solve(2*x+5==10)==2.5);
@@ -94,7 +94,7 @@ TEST_CASE("test ComplexVariable"){
     ComplexVariable y;
     CHECK(solve(2*y-4 == 10)==std::complex<double>(7,0));
     CHECK(solve(y-4 == 10)==std::complex<double>(14,0));
-    CHECK(solve(y == 10)==std::complex<double>(10,0));
+   // CHECK(solve(y == 10)==std::complex<double>(10,0));
     CHECK((solve((y^2) == 16)==std::complex<double>(4,0)||solve((y^2) == 16)==std::complex<double>(-4,0)));
     CHECK((solve((y^2) == -16)==std::complex<double>(0,4)||solve((y^2) == -16)==std::complex<double>(0,-4)));
     CHECK((solve((y^2) + 2*y + 4 == 20 + 6*y/2 - y)==std::complex<double>(4,0)||solve((y^2) + 2*y + 4 == 20 + 6*y/2 - y)==std::complex<double>(-4,0))); //(-4,0)
@@ -131,5 +131,9 @@ TEST_CASE("CHECK_THROWS ComplexVariable ") {
     CHECK_THROWS(solve(2*(y ^ -2) == -200));
     CHECK_THROWS(solve((y ^ -2) == -16));
     CHECK_THROWS(solve((y^5)+2==18));
+    CHECK_THROWS(solve((y ^ 8)==-16));
+    CHECK_THROWS(solve((y ^ 9)==-16));
+
+
 
 }
